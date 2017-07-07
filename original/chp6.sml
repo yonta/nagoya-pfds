@@ -134,7 +134,7 @@ struct
   fun head ([], lenf, f, lenr, r) = raise Empty
     | head (x :: w, lenf, f, lenr, r) = x
   fun tail ([], lenf, f, lenr, r) = raise Empty
-    | tail (x :: w, lenf, f, lenr, r) = 
+    | tail (x :: w, lenf, f, lenr, r) =
         check (w, lenf-1,$(tl (force f)), lenr, r)
 end
 

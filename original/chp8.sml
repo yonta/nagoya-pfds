@@ -78,7 +78,7 @@ struct
   val empty = (0, [], Idle, 0, [])
   fun isEmpty (lenf, f, state, lenr, r) = (lenf = 0)
 
-  fun snoc ((lenf, f, state, lenr, r), x) = 
+  fun snoc ((lenf, f, state, lenr, r), x) =
         check (lenf,f,state,lenr+1,x::r)
   fun head (lenf, [], state, lenr, r) = raise Empty
     | head (lenf, x :: f, state, lenr, r) = x

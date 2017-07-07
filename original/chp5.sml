@@ -101,7 +101,7 @@ struct
         if Elem.leq (x, pivot) then
           case b of
             E => (t, E)
-	  | T (b1, y, b2) => 
+	  | T (b1, y, b2) =>
               if Elem.leq (y, pivot) then
                 let val (small, big) = partition (pivot, b2)
                 in (T (T (a, x, b1), y, small), big) end
@@ -111,7 +111,7 @@ struct
 	else
           case a of
             E => (E, t)
-	  | T (a1, y, a2) => 
+	  | T (a1, y, a2) =>
               if Elem.leq (y, pivot) then
                 let val (small, big) = partition (pivot, a2)
 		in (T (a1, y, small), T (big, x, b)) end

@@ -118,7 +118,7 @@ struct
     | exec (($(Cons (Zero, job))) :: sched) = job :: sched
     | exec (_ :: sched) = sched
 
-  fun insert (x, (ds, sched)) = 
+  fun insert (x, (ds, sched)) =
         let val ds' = insTree (Node (x, []), ds)
 	in (ds', exec (exec (ds' :: sched))) end
   fun merge ((ds1, _), (ds2, _)) =

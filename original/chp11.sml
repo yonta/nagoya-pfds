@@ -279,7 +279,7 @@ struct
   fun dappendL (d1, d2) =
         if D.isEmpty d1 then d2
         else dappendL (D.init d1, D.cons (D.last d1, d2))
-  fun dappendR (d1, d2) = 
+  fun dappendR (d1, d2) =
         if D.isEmpty d2 then d1
         else dappendR (D.snoc (d1, D.head d2), D.tail d2)
 
@@ -369,7 +369,7 @@ struct
   fun dappendL (d1, d2) =
         if D.isEmpty d1 then d2
         else dappendL (D.init d1, D.cons (D.last d1, d2))
-  fun dappendR (d1, d2) = 
+  fun dappendR (d1, d2) =
         if D.isEmpty d2 then d1
         else dappendR (D.snoc (d1, D.head d2), D.tail d2)
 
@@ -419,4 +419,3 @@ struct
 
   val init = stub
 end
-

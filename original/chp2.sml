@@ -49,7 +49,7 @@ struct
     | tail (Cons (x, s)) = s
 end
 
-local 
+local
   open List
 in
   fun xs ++ ys = if isEmpty xs then ys else cons (head xs, tail xs ++ ys)

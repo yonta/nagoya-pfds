@@ -44,7 +44,7 @@ end
 structure AltBinaryRandomAccessList : RANDOM_ACCESS_LIST =
   (* assumes polymorphic recursion! *)
 struct
-  datatype 'a RList = 
+  datatype 'a RList =
       Nil | Zero of ('a * 'a) RList | One of 'a * ('a * 'a) RList
 
   val empty = Nil
@@ -170,7 +170,7 @@ struct
     | checkF q = Q q
 
   and snocEL (E, x) = Q (1, [x], E, 0, [])
-    | snocEL (Q (lenfm, f, m, lenr, r), x) = 
+    | snocEL (Q (lenfm, f, m, lenr, r), x) =
         checkQ (lenfm, f, m, lenr+1, x :: r)
   and headEL E = raise Empty
     | headEL (Q (lenfm, x :: f', m, lenr, r)) = x
@@ -223,7 +223,7 @@ struct
 end
 
 (*
-functor Bootstrap (functor MakeH (Element : ORDERED) 
+functor Bootstrap (functor MakeH (Element : ORDERED)
                              : HEAP where type Elem.T = Element.T)
                   (Element : ORDERED) : HEAP =
 struct
@@ -260,7 +260,7 @@ struct
         if PrimH.isEmpty p then E
         else let val (H (y, p1)) = PrimH.findMin p
                  val p2 = PrimH.deleteMin p
-             in H (y, PrimH.merge (p1, p2)) end 
+             in H (y, PrimH.merge (p1, p2)) end
 end
 *)
 
@@ -292,7 +292,7 @@ sig
 end
 
 (*
-functor Bootstrap (functor MakeH (Key : ORDERED) 
+functor Bootstrap (functor MakeH (Key : ORDERED)
                              : HEAP_WITH_INFO where type Priority.T = Key.T)
                   (Key : ORDERED) : HEAP_WITH_INFO =
 struct
@@ -319,7 +319,7 @@ struct
         if PrimH.isEmpty p then E
         else let val (y, Prim (v, p1)) = PrimH.findMin p
                  val p2 = PrimH.deleteMin p
-             in H (y, v, PrimH.merge (p1, p2)) end 
+             in H (y, v, PrimH.merge (p1, p2)) end
 end
 *)
 

@@ -210,7 +210,7 @@ struct
         end
   fun insTree (t, []) = [t]
     | insTree (t1, t2 :: ts) =
-        if rank t1 < rank t2 then t1 :: t2 :: ts 
+        if rank t1 < rank t2 then t1 :: t2 :: ts
         else insTree (link (t1, t2), ts)
   fun mergeTrees (ts1, []) = ts1
     | mergeTrees ([], ts2) = ts2
