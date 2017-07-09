@@ -115,14 +115,14 @@ struct
 
   exception SameElement
 
-  fun insertImple (x, E, last) =
+  fun insertImpl (x, E, last) =
     if Element.eq (x, last) then raise SameElement else T (E, x, E)
-    | insertImple (x, set as T (left, elem, right), last) =
-      if Element.lt (x, elem) then T (insertImple (x, left, last), elem, right)
-      else T (left, elem, insertImple (x, right, elem))
+    | insertImpl (x, set as T (left, elem, right), last) =
+      if Element.lt (x, elem) then T (insertImpl (x, left, last), elem, right)
+      else T (left, elem, insertImpl (x, right, elem))
 
   fun insert (elem, E) = T (E, elem, E)
-    | insert (x, set as T (_, elem, _)) = insertImple (x, set, elem)
+    | insert (x, set as T (_, elem, _)) = insertImpl (x, set, elem)
                                           handle SameElement => set
 end
 
