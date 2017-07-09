@@ -8,7 +8,7 @@ val () = Control.Print.printDepth := 10  (* 再帰データの深さ、default :
 val () = Control.Print.printLength := 20 (* リスト長さ、default : 12 *)
 
 
-structure Element : ORDERED =
+structure Elem : ORDERED =
 struct
   open Int
   type T = int
@@ -17,9 +17,9 @@ struct
   fun leq (x, y) = x <= y
 end
 
-datatype Heap = E | T of int * Element.T * Heap * Heap
+datatype Heap = E | T of int * Elem.T * Heap * Heap
 
 fun insert (x, E) = T (1, x, E, E)
   | insert (x, heap as T (rank, elem, left, right)) =
-    if Element.leq (x, elem) then T (1, x, heap, E)
+    if Elem.leq (x, elem) then T (1, x, heap, E)
     else T (rank, elem, insert (x, left), right)
