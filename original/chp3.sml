@@ -95,7 +95,7 @@ struct
     | removeMinTree [t] = (t, [])
     | removeMinTree (t :: ts) =
         let val (t', ts') = removeMinTree ts
-	in if Elem.leq (root t, root t') then (t, ts) else (t', t :: ts') end
+        in if Elem.leq (root t, root t') then (t, ts) else (t', t :: ts') end
 
   fun findMin ts = let val (t, _) = removeMinTree ts in root t end
   fun deleteMin ts =
@@ -137,10 +137,10 @@ struct
 
   fun insert (x, s) =
         let fun ins E = T (R, E, x, E)
-	      | ins (s as T (color, a, y, b)) =
+              | ins (s as T (color, a, y, b)) =
                   if Element.lt (x, y) then balance (color, ins a, y ,b)
                   else if Element.lt (y, x) then balance (color, a, y, ins b)
-		  else s
+                  else s
             val T (_, a, y, b) = ins s  (* guaranteed to be non-empty *)
-	in T (B, a, y, b) end
+        in T (B, a, y, b) end
 end

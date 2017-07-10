@@ -104,14 +104,14 @@ struct
     | removeMinTree [t] = (t, [])
     | removeMinTree (t :: ts) =
         let val (t', ts') = removeMinTree ts
-	in if Elem.leq (root t, root t') then (t, ts) else (t', t :: ts') end
+        in if Elem.leq (root t, root t') then (t, ts) else (t', t :: ts') end
 
   fun findMin ($ts) = let val (t, _) = removeMinTree ts in root t end
 
   (* fun lazy *)
   fun deleteMin ($ts) =
         let val (Node (_, x, ts1), ts2) = removeMinTree ts
-	in $(mrg (rev ts1, ts2)) end
+        in $(mrg (rev ts1, ts2)) end
 end
 
 
@@ -166,12 +166,12 @@ struct
   fun add (x, (size, segs)) =
         let fun addSeg (seg, segs, size) =
                   if size mod 2 = 0 then seg :: segs
-		  else addSeg (mrg (seg, hd segs), tl segs, size div 2)
-	in (size+1, $(addSeg ([x], force segs, size))) end
+                  else addSeg (mrg (seg, hd segs), tl segs, size div 2)
+        in (size+1, $(addSeg ([x], force segs, size))) end
   fun sort (size, segs) =
         let fun mrgAll (xs, []) = xs
-	      | mrgAll (xs, seg :: segs) = mrgAll (mrg (xs, seg), segs)
-	in mrgAll ([], force segs) end
+              | mrgAll (xs, seg :: segs) = mrgAll (mrg (xs, seg), segs)
+        in mrgAll ([], force segs) end
 end
 
 functor LazyPairingHeap (Element : ORDERED) : HEAP =

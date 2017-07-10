@@ -90,7 +90,7 @@ struct
     | unconsTree (One t :: ts) = (t, Zero :: ts)
     | unconsTree (Zero :: ts) =
         let val (Node (_, t1, t2), ts') = unconsTree ts
-	in (t1, One t2 :: ts') end
+        in (t1, One t2 :: ts') end
 
   fun cons (x, ts) = consTree (Leaf x, ts)
   fun head ts = let val (Leaf x, _) = unconsTree ts in x end
@@ -128,7 +128,7 @@ struct
 
   fun cons (x, ts as (w1, t1) :: (w2, t2) :: ts') =
         if w1 = w2 then (1+w1+w2, Node (x, t1, t2)) :: ts'
-	else (1, Leaf x) :: ts
+        else (1, Leaf x) :: ts
     | cons (x, ts) = (1, Leaf x) :: ts
   fun head [] = raise Empty
     | head ((1, Leaf x) :: ts) = x
@@ -142,7 +142,7 @@ struct
     | lookupTree (w, 0, Node (x, t1, t2)) = x
     | lookupTree (w, i, Node (x, t1, t2)) =
         if i <= w div 2 then lookupTree (w div 2, i-1, t1)
-	else lookupTree (w div 2, i - 1 - w div 2, t2)
+        else lookupTree (w div 2, i - 1 - w div 2, t2)
   fun updateTree (1, 0, y, Leaf x) = Leaf y
     | updateTree (1, i, y, Leaf x) = raise Subscript
     | updateTree (w, 0, y, Node (x, t1, t2)) = Node (y, t1, t2)
@@ -204,9 +204,9 @@ struct
         else Node (r+1, x2, xs2, t1 :: c2)
   fun skewLink (x, t1, t2) =
         let val Node (r, y, ys, c) = link (t1, t2)
-	in
-	    if Elem.leq (x, y) then Node (r, x, y :: ys, c)
-	    else Node (r, y, x :: ys, c)
+        in
+          if Elem.leq (x, y) then Node (r, x, y :: ys, c)
+          else Node (r, y, x :: ys, c)
         end
   fun insTree (t, []) = [t]
     | insTree (t1, t2 :: ts) =
@@ -231,12 +231,12 @@ struct
     | removeMinTree [t] = (t, [])
     | removeMinTree (t :: ts) =
         let val (t', ts') = removeMinTree ts
-	in if Elem.leq (root t, root t') then (t, ts) else (t', t :: ts') end
+        in if Elem.leq (root t, root t') then (t, ts) else (t', t :: ts') end
 
   fun findMin ts = let val (t, _) = removeMinTree ts in root t end
   fun deleteMin ts =
         let val (Node (_, x, xs, ts1), ts2) = removeMinTree ts
-	    fun insertAll ([], ts) = ts
-	      | insertAll (x :: xs, ts) = insertAll (xs, insert (x, ts))
-	in insertAll (xs, merge (rev ts1, ts2)) end
+            fun insertAll ([], ts) = ts
+              | insertAll (x :: xs, ts) = insertAll (xs, insert (x, ts))
+        in insertAll (xs, merge (rev ts1, ts2)) end
 end

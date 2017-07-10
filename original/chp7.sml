@@ -120,7 +120,7 @@ struct
 
   fun insert (x, (ds, sched)) =
         let val ds' = insTree (Node (x, []), ds)
-	in (ds', exec (exec (ds' :: sched))) end
+        in (ds', exec (exec (ds' :: sched))) end
   fun merge ((ds1, _), (ds2, _)) =
         let val ds = normalize (mrg (ds1, ds2)) in (ds, []) end
 
@@ -138,7 +138,7 @@ struct
   fun deleteMin (ds, _) =
         let val (Node (x, c), ds') = removeMinTree ds
             val ds'' = mrg (listToStream (map One (rev c)), ds')
-	in (normalize ds'', []) end
+        in (normalize ds'', []) end
 end
 
 fun streamToList ($Nil) = []
@@ -169,11 +169,11 @@ struct
               if size mod 2 = 0 then (xs, rev rsched) :: segs
               else let val ((xs', []) :: segs') = segs
                        val xs'' = mrg (xs, xs')
-		   in addSeg (xs'', segs', size div 2, xs'' :: rsched) end
-	    val segs' = addSeg ($(Cons (x, $Nil)), segs, size, [])
-	in (size+1, map exec2 segs') end
+                   in addSeg (xs'', segs', size div 2, xs'' :: rsched) end
+            val segs' = addSeg ($(Cons (x, $Nil)), segs, size, [])
+        in (size+1, map exec2 segs') end
   fun sort (size, segs) =
         let fun mrgAll (xs, []) = xs
-	      | mrgAll (xs, (xs', _) :: segs) = mrgAll (mrg (xs, xs'), segs)
-	in streamToList (mrgAll ($Nil, segs)) end
+              | mrgAll (xs, (xs', _) :: segs) = mrgAll (mrg (xs, xs'), segs)
+        in streamToList (mrgAll ($Nil, segs)) end
 end

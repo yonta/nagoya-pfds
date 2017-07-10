@@ -68,7 +68,7 @@ struct
   fun exec2 (lenf, f, state, lenr, r) =
         case exec (exec state) of
             Done newf => (lenf, newf, Idle, lenr, r)
-	  | newstate => (lenf, f, newstate, lenr, r)
+          | newstate => (lenf, f, newstate, lenr, r)
 
   fun check (q as (lenf, f, state, lenr, r)) =
         if lenr <= lenf then exec2 q
@@ -100,7 +100,7 @@ struct
               val f' = take (i, f)        val r' = r ++ reverse (drop (i, f))
           in (i, f', j, r') end
         else if lenr > c*lenf + 1 then
-	  let val j = (lenf+lenr) div 2   val i = lenf + lenr - j
+          let val j = (lenf+lenr) div 2   val i = lenf + lenr - j
               val r' = take (j, r)        val f' = f ++ reverse (drop (j, r))
           in (i, f', j, r') end
         else q
@@ -135,8 +135,8 @@ struct
         $(Cons (x, rotateRev (f, drop (c, r), reverse (take (c, r)) ++ a)))
   fun rotateDrop (f, j, r) =
         if j < c then rotateRev (f, drop (j, r), $Nil)
-	else let val ($(Cons (x, f'))) = f
-	     in $(Cons (x, rotateDrop (f', j-c, drop (c,r)))) end
+        else let val ($(Cons (x, f'))) = f
+             in $(Cons (x, rotateDrop (f', j-c, drop (c,r)))) end
 
   fun check (q as (lenf, f, sf, lenr, r, sr)) =
         if lenf > c*lenr+1 then

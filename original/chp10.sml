@@ -58,7 +58,7 @@ struct
     | uncons (One (x, Nil)) = (x, Nil)
     | uncons (One (x, ps)) = (x, Zero ps)
     | uncons (Zero ps) = let val ((x, y), ps') = uncons ps
-			 in (x, One (y, ps')) end
+                         in (x, One (y, ps')) end
 
   fun head xs = let val (x, _) = uncons xs in x end
   fun tail xs = let val (_, xs') = uncons xs in xs' end
@@ -67,14 +67,14 @@ struct
     | lookup (0, One (x, ps)) = x
     | lookup (i, One (x, ps)) = lookup (i-1, Zero ps)
     | lookup (i, Zero ps) = let val (x, y) = lookup (i div 2, ps)
-			    in if i mod 2 = 0 then x else y end
+                            in if i mod 2 = 0 then x else y end
 
   fun fupdate (f, i, Nil) = raise Subscript
     | fupdate (f, 0, One (x, ps)) = One (f x, ps)
     | fupdate (f, i, One (x, ps)) = cons (x, fupdate (f, i-1, Zero ps))
     | fupdate (f, i, Zero ps) =
         let fun f' (x, y) = if i mod 2 = 0 then (f x, y) else (x, f y)
-	in Zero (fupdate (f', i div 2, ps)) end
+        in Zero (fupdate (f', i div 2, ps)) end
 
   fun update (i, y, xs) = fupdate (fn x => y, i, xs)
 end
@@ -99,7 +99,7 @@ struct
     | unconsEP (One (x, Nil)) = (x, Nil)
     | unconsEP (One (x, ps)) = (x, Zero ps)
     | unconsEP (Zero ps) = let val (Pair (x, y), ps') = unconsEP ps
-			   in (x, One (y, ps')) end
+                           in (x, One (y, ps')) end
 
   fun head xs = let val (Elem x, _) = unconsEP xs in x end
   fun tail xs = let val (_, xs') = unconsEP xs in xs' end
@@ -118,7 +118,7 @@ struct
     | fupdate (f, i, Zero ps) =
         let fun f' (Pair (x, y)) =
                   if i mod 2 = 0 then Pair (f x, y) else Pair (x, f y)
-	in Zero (fupdate (f', i div 2, ps)) end
+        in Zero (fupdate (f', i div 2, ps)) end
 
   fun update (i, y, xs) = fupdate (fn x => Elem y, i, xs)
 end
@@ -166,7 +166,7 @@ struct
   and checkF (lenfm, [], E, lenr, r) = E
     | checkF (lenfm, [], m, lenr, r) =
         let val List ($f) = headEL m
-	in Q (lenfm, f, tail m, lenr, r) end
+        in Q (lenfm, f, tail m, lenr, r) end
     | checkF q = Q q
 
   and snocEL (E, x) = Q (1, [x], E, 0, [])
@@ -350,8 +350,8 @@ struct
   fun bind ([], x, Trie (_, m)) = Trie (SOME x, m)
     | bind (k :: ks, x, Trie (v, m)) =
         let val t = M.lookup (k, m) handle NotFound => empty
-	    val t' = bind (ks, x, t)
-	in Trie (v, M.bind (k, t', m)) end
+            val t' = bind (ks, x, t)
+        in Trie (v, M.bind (k, t', m)) end
 end
 
 datatype 'a Tree = E | T of 'a * 'a Tree * 'a Tree
@@ -376,8 +376,8 @@ struct
         let val tt = M.lookup (k, m) handle NotFound => empty
             val t = lookup (a, tt) handle NotFound => empty
             val t' = bind (b, x, t)
-	    val tt' = bind (a, t', tt)
-	in Trie (v, M.bind (k, tt', m)) end
+            val tt' = bind (a, t', tt)
+        in Trie (v, M.bind (k, tt', m)) end
 end
 *)
 
@@ -405,8 +405,8 @@ struct
         let val tt = M.lookup (k, m) handle NotFound => empty
             val Map t = lookupEM (a, tt) handle NotFound => Map empty
             val t' = bindEM (b, x, t)
-	    val tt' = bindEM (a, Map t', tt)
-	in Trie (v, M.bind (k, tt', m)) end
+            val tt' = bindEM (a, Map t', tt)
+        in Trie (v, M.bind (k, tt', m)) end
 
   fun bind (t, x, trie) = bindEM (t, Elem x, trie)
 end

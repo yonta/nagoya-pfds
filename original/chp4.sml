@@ -36,12 +36,12 @@ struct
   (* fun lazy *)
   fun drop (n, s) =
         let fun drop' (0, s) = s
-	      | drop' (n, $Nil) = $Nil
-	      | drop' (n, $(Cons (x, s))) = drop' (n-1, s)
-	in drop' (n, s) end
+              | drop' (n, $Nil) = $Nil
+              | drop' (n, $(Cons (x, s))) = drop' (n-1, s)
+        in drop' (n, s) end
   (* fun lazy *)
   fun reverse s =
         let fun reverse' ($Nil, r) = r
-	      | reverse' ($(Cons (x, s)), r) = reverse' (s, $(Cons (x, r)))
-	in reverse' (s, $Nil) end
+              | reverse' ($(Cons (x, s)), r) = reverse' (s, $(Cons (x, r)))
+        in reverse' (s, $Nil) end
 end

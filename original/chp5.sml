@@ -101,23 +101,23 @@ struct
         if Elem.leq (x, pivot) then
           case b of
             E => (t, E)
-	  | T (b1, y, b2) =>
+          | T (b1, y, b2) =>
               if Elem.leq (y, pivot) then
                 let val (small, big) = partition (pivot, b2)
                 in (T (T (a, x, b1), y, small), big) end
               else
                 let val (small, big) = partition (pivot, b1)
                 in (T (a, x, small), T (big, y, b2)) end
-	else
+        else
           case a of
             E => (E, t)
-	  | T (a1, y, a2) =>
+          | T (a1, y, a2) =>
               if Elem.leq (y, pivot) then
                 let val (small, big) = partition (pivot, a2)
-		in (T (a1, y, small), T (big, x, b)) end
-	      else
+                in (T (a1, y, small), T (big, x, b)) end
+              else
                 let val (small, big) = partition (pivot, a1)
-		in (small, T (big, y, T (a2, x, b))) end
+                in (small, T (big, y, T (a2, x, b))) end
 
   fun insert (x, t) = let val (a, b) = partition (x, t) in T (a, x, b) end
   fun merge (E, t) = t
