@@ -175,7 +175,7 @@ struct
     | completeImple (x, depth, lastSet) =
       completeImple (x, depth - 1, T (lastSet, x, lastSet))
 
-  fun complete (x, depth) = if depth < 0 then E
+  fun complete (x, depth) = if depth <= 0 then E
                             else completeImple (x, depth, E)
 
   (* size mをうけとって、m個とm+1個のツリーを作る *)
