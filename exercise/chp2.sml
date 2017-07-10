@@ -44,7 +44,7 @@ suffixes [1, 2, 3, 4];
  * よって、結果の生成時間は明らかにO(n)である
  *)
 
-(* ex 2.2, 2.3*)
+(* ex 2.2, 2.3 *)
 functor UnbalancedSet2 (Element : ORDERED) : SET =
 struct
   type Elem = Element.T
@@ -53,6 +53,7 @@ struct
 
   val empty = E
 
+  (* ex 2.2 *)
   (* Elem * Set * Elem -> bool *)
   fun memberImpl (x, E, last) = Element.eq (x, last)
     | memberImpl (x, T (a, y, b), last) =
@@ -62,6 +63,7 @@ struct
   fun member (x, E) = false
     | member (x, t as T (a, y, b)) = memberImpl (x, t, y)
 
+  (* ex 2.3 *)
   exception SameElement
 
   fun insertImple (x, E) = T (E, x, E)
@@ -113,6 +115,7 @@ struct
   fun member (x, E) = false
     | member (x, t as T (a, y, b)) = memberImpl (x, t, y)
 
+  (* ex 2.4 *)
   exception SameElement
 
   fun insertImpl (x, E, last) =
@@ -171,6 +174,7 @@ struct
     | insert (x, set as T (_, elem, _)) = insertImple (x, set, elem)
                                           handle SameElement => set
 
+  (* ex 2.5 *)
   fun completeImple (_, 0, lastSet) = lastSet
     | completeImple (x, depth, lastSet) =
       completeImple (x, depth - 1, T (lastSet, x, lastSet))
@@ -178,6 +182,7 @@ struct
   fun complete (x, depth) = if depth <= 0 then E
                             else completeImple (x, depth, E)
 
+  (* ex 2.6 *)
   (* size mをうけとって、m個とm+1個のツリーを作る *)
   fun create2 (x, 0, atom) = (E, atom)
     | create2 (x, size, atom) =
