@@ -93,7 +93,7 @@ local
     fun lt (x, y) = x < y
     fun leq (x, y) = x <= y
   end
-  structure MyBH = BinomialHeap (Elem);
+  structure MyBH = BinomialHeap (Elem)
   open MyBH
   val bh = empty;
   val bh1 = insert (1, bh)
