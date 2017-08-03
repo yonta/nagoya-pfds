@@ -95,7 +95,7 @@ struct
   (* ex4.2 *)
   fun lazy insert x (s as $Nil) = $(Cons (x, s))
          | insert x (s as $(Cons (y, s1))) =
-      if Elem.lt (x, y) then $(Cons (x, s)) else $(Cons (y, insert x s1))
+           $(if Elem.lt (x, y) then Cons (x, s) else Cons (y, insert x s1))
 
   fun lazy sort ($Nil) = $Nil
          | sort ($(Cons (x, s))) = insert x (sort s)
