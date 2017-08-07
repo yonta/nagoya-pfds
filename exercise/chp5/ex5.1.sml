@@ -28,11 +28,17 @@ struct
   fun isEmpty (nil, nil) = true
     | isEmpty _ = false
 
-  fun share 0 to from = (to, from)
-    | share i to (x::from) = share (i-1) (x::to) from
-    | share _ _ _ = raise Empty
+  (*
+   * fromから先頭i個を取ったものと、その残りをrevしたものを返す
+   * List.takeやList.dropで別々に取り出すと、コストが倍かかるため、
+   * 1回の操作で両操作する関数を独自実装した。
+   *)
+  fun share 0 to from = (to, rev from)
+    | share i to (x::from) =
+    let val (to, from) = share (i-1) to from
+    in (x::to, from) end
 
-  fun half nil = (nil, nil)
+  fun half nil = empty
     | half l =
       let
         val i = length l div 2
@@ -40,10 +46,10 @@ struct
         share i nil l
       end
 
-  fun check (nil, r as _::_::_) = half r
-    | check (f as _::_::_, nil) =
+  fun check (f as _::_::_, nil) = half f
+    | check (nil, r as _::_::_) =
       let
-        val (r, f) = half f
+        val (r, f) = half r
       in
         (f, r)
       end
@@ -77,9 +83,11 @@ local
 in
 val d0 = empty
 val d1 = cons (0, d0)
+val d = init d1
 val d2 = cons (1, d1)
 val d3 = cons (2, d2)
 val d4 = snoc (d3, 3)
 val d5 = init d4
-val d6 = init d5
+val d6 = cons (3, d5)
+val d7 = init d6
 end
