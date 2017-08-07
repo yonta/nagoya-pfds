@@ -53,18 +53,22 @@ struct
     | cons (x, (f, r)) = (x::f, r)
 
   fun head ((x::_, _)) = x
+    | head (nil, [x]) = x
     | head _ = raise Empty
 
   fun tail (_::f, r) = check (f, r)
+    | tail (nil, [x]) = empty
     | tail _ = raise Empty
 
   fun snoc ((nil, r), x) = check (nil, x::r)
     | snoc ((f, r), x) = (f, x::r)
 
   fun last (_, x::_) = x
+    | last ([x], nil) = x
     | last _ = raise Empty
 
   fun init (f, _::r) = check (f, r)
+    | init ([x], nil) = empty
     | init _ = raise Empty
 end
 
