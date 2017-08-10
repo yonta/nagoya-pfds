@@ -8,27 +8,41 @@ size(T) = n -> maxDepth(T) <= 2 floor(log(n+1))
 
 これを赤黒木Tの構造に関する帰納法でしめす。
 
-# T = Eの場合
+# 木TがEの場合
 
 maxDepth(T) = 0
 2 floor(log(0+1)) = 0
 
 で明らか
 
-# T = Eの場合
+# 木TがT (color, left, x, right)の場合
 
-帰納法の仮定より、Tよりサイズが１小さいT'で定理が成り立つ。
+帰納法の仮定より、部分木left/rightでは結論が成り立つ。
 よって、
 
-maxDepth(T') <= 2 floor(log(n))
+maxDepth(left)  <= 2 floor(log(size(left)+1))
+maxDepth(right) <= 2 floor(log(size(right)+1))
 
-このとき、証明したい定理の左辺と右辺は以下の場合がありうる
+また、ここで部分木は左のほうが深さが大きいと仮定する。
+つまり、size(left) >= size(right)である。
+ツリーに左右の違いはないため、この仮定は証明に影響を及ぼさない。
+すると、ツリーの構造から次が成り立つ。
 
-maxDepth(T) = maxDepth(T')
-            or maxDepth(T') + 1     ---1
+size(T) = size(left) + size(right) + 1
+maxDepth(T) = maxDepth(left) + 1
 
-2 floor(log(n+1)) = 2 floor(log(n))         ---2
-                  or 2 floor(log(n)) + 2
+故に、
 
-1かつ2のパターンがやばいが、証明する画期的な発想が足りなかったので、
-またあとで考える。
+maxdepth(T) <= 2 floor(log(size(left)+1)) + 1
+
+size(T) = size(left) + size(right) + 1
+size(left) + 1 = size(T) - size(right)
+               <= size(T) / 2
+
+よって
+maxdepth(T) <= 2 floor(log(size(T)/2)) + 1
+             = 2 floor(log(size(T))) -2 + 1
+             = 2 floor(log(size(T))) - 1
+            <= 2 floor(log(size(T)))
+
+よって証明できた。
