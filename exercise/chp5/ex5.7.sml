@@ -1,11 +1,20 @@
 (* OS.FileSys.chDir "./exercise/chp5" *)
 
 (* use "../../original/base.sml"; *)
-use "../../original/chp5.sml";
+(* use "../../original/chp5.sml"; *)
 
 (* SML/NJのプリンタ設定を変える *)
 val () = Control.Print.printDepth := 20  (* 再帰データの深さ、default : 5 *)
 val () = Control.Print.printLength := 20 (* リスト長さ、default : 12 *)
+
+signature ORDERED =
+sig
+  type T
+
+  val eq  : T * T -> bool
+  val lt  : T * T -> bool
+  val leq : T * T -> bool
+end
 
 signature HEAP =
 sig
