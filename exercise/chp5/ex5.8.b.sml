@@ -37,6 +37,9 @@ struct
     | merge (h1 as T (x, left1, E), h2 as T (y, left2, E)) =
       if Elem.leq (x, y) then T (x, T (y, left2, left1), E)
       else T (y, T (x, left1, left2), E)
+    | merge (T (_, _, _), T (_, _, _)) =
+      raise Fail "merge: not E in right subtree"
+
   fun insert (x, h) = merge (T (x, E, E), h)
 
   fun mergePairs E = E
@@ -45,9 +48,13 @@ struct
       merge (merge (T (x, left1, E), T (y, left2, E)), mergePairs right2)
 
   fun findMin E = raise Empty
-    | findMin (T (x, _, _)) = x
+    | findMin (T (x, _, E)) = x
+    | findMin (T (_, _, _)) = raise Fail "findMin: not E in right subtree"
+
   fun deleteMin E = raise Empty
     | deleteMin (T (x, left, E)) = mergePairs left
+    | deleteMin (T (_, _, _))  = raise Fail "deleteMin: not E in right subtree"
+
 end
 
 local
