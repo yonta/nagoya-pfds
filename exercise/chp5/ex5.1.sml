@@ -44,35 +44,30 @@ struct
   fun isEmpty (nil, nil) = true
     | isEmpty _ = false
 
-  (*
-   * fromから先頭i個を取ったものと、その残りをrevしたものを返す
-   * List.takeやList.dropで別々に取り出すと、コストが倍かかるため、
-   * 1回の操作で両操作する関数を独自実装した。
-   *)
-  fun share 0 to from = (to, rev from)
-    | share i to (x::from) =
-    let val (to, from) = share (i-1) to from
-    in (x::to, from) end
+  fun splitAtImpl 0 toList fromList = (rev toList, fromList)
+    | splitAtImpl i toList (h::t) = splitAtImpl (i-1) (h::toList) t
+    | splitAtImpl _ _ nil =
+      raise Fail "Deque.splitAtImpl: call with nil in 3rd arguments"
+
+  fun splitAt n list = splitAtImpl n nil list
 
   fun half nil = empty
     | half l =
       let
         val i = length l div 2
       in
-        share i nil l
+        splitAt i l
       end
 
-  fun check (f as _::_::_, nil) = half f
+  fun check (f as _::_::_, nil) =
+      let val (f, r) = half f
+      in  (f, rev r) end
     | check (nil, r as _::_::_) =
-      let
-        val (r, f) = half r
-      in
-        (f, r)
-      end
+      let val (r, f) = half r
+      in  (rev f, r) end
     | check q = q
 
-  fun cons (x, (f, nil)) = check (x::f, nil)
-    | cons (x, (f, r)) = (x::f, r)
+  fun cons (x, (f, r)) = check (x::f, r)
 
   fun head ((x::_, _)) = x
     | head (nil, [x]) = x
@@ -82,8 +77,9 @@ struct
     | tail (nil, [x]) = empty
     | tail _ = raise Empty
 
-  fun snoc ((nil, r), x) = check (nil, x::r)
-    | snoc ((f, r), x) = (f, x::r)
+  fun snoc ((f, r), x) = check (f, x::r)
+  (* fun snoc ((nil, r), x) = check (nil, x::r) *)
+  (*   | snoc ((f, r), x) = (f, x::r) *)
 
   fun last (_, x::_) = x
     | last ([x], nil) = x
@@ -99,13 +95,13 @@ local
 in
 val d0 = empty
 val d1 = cons (0, d0)
-val d = init d1
 val d2 = cons (1, d1)
 val d3 = cons (2, d2)
-val d4 = snoc (d3, 3)
+val d4 = snoc (d3, ~1)
 val d5 = init d4
 val d6 = cons (3, d5)
 val d7 = init d6
+val d = init d1
 end
 
 (*
