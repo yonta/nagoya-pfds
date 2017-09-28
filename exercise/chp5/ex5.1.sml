@@ -1,12 +1,28 @@
 (* OS.FileSys.chDir "./exercise/chp5" *)
 
 (* use "../../original/base.sml"; *)
-use "../../original/chp5.sml";
+(* use "../../original/chp5.sml"; *)
 
 (* SML/NJのプリンタ設定を変える
 val () = Control.Print.printDepth := 10  (* 再帰データの深さ、default : 5 *)
 val () = Control.Print.printLength := 20 (* リスト長さ、default : 12 *)
  *)
+
+signature DEQUE =
+sig
+  type 'a Queue
+
+  val empty   : 'a Queue
+  val isEmpty : 'a Queue -> bool
+
+  val cons    : 'a * 'a Queue -> 'a Queue
+  val head    : 'a Queue -> 'a
+  val tail    : 'a Queue -> 'a Queue
+
+  val snoc    : 'a Queue * 'a -> 'a Queue
+  val last    : 'a Queue -> 'a
+  val init    : 'a Queue -> 'a Queue
+end
 
 (*
  *                   f     r
