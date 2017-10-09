@@ -1,0 +1,21 @@
+# Compile by Graphviz
+#   $ dot -T png ex6.1.dot -o ex6.1.png
+
+digraph answer {
+
+    # node
+    val0 [label = "empty"]
+    val1 [label = "val a = snoc (empty, 0)"]
+    val2 [label = "val b = snoc (a, 1)"]
+    val3 [label = "val c = tail b"]
+    val4 [label = "val d = snoc (b, 2)"]
+    val5 [label = "val e = c ++ d"]
+    val6 [label = "val f = tail c"]
+    val7 [label = "val g = snoc (d, 3)"]
+
+    # graph
+    val0 -> val1 -> val2 -> val3 -> val6
+    val2 -> val4 -> val7
+    val3 -> val5
+    val4 -> val5
+}
