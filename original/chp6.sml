@@ -48,7 +48,9 @@ sig
   val deleteMin : Heap -> Heap     (* raises Empty if heap is empty *)
 end
 
-open Stream
+local
+  open Stream
+in
 
 structure BankersQueue : QUEUE =
 struct
@@ -58,7 +60,7 @@ struct
   fun isEmpty (lenf, _, _, _) = (lenf = 0)
 
   fun check (q as (lenf, f, lenr, r)) =
-        if lenr <= lenf then q else (lenf+lenr, f ++ reverse r, 0, $Nil)
+    if lenr <= lenf then q else (lenf+lenr, f ++ reverse r, 0, $Nil)
 
   fun snoc ((lenf, f, lenr, r), x) = check (lenf, f, lenr+1, $(Cons (x, r)))
 
@@ -66,6 +68,8 @@ struct
     | head (lenf, $(Cons (x, f')), lenr, r) = x
   fun tail (lenf, $Nil, lenr, r) = raise Empty
     | tail (lenf, $(Cons (x, f')), lenr, r) = check (lenf-1, f', lenr, r)
+end
+
 end
 
 functor LazyBinomialHeap (Element : ORDERED) : HEAP =
