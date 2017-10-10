@@ -40,3 +40,32 @@ struct
   fun deleteMin (0, _) = raise Empty
     | deleteMin (size, heap) = (size - 1, Heap.deleteMin heap)
 end
+
+(* 実装を試してみたが、lazy化されてるかチェックできない。
+ * ヒープ構造がlazyだが、ユーザはElem要素しか選択できないため、
+ * 重たい処理をいれることができない。
+ *)
+local
+  structure Elem : ORDERED =
+  struct
+    open Int
+    type T = int
+    fun eq (x : T, y) = x = y
+    fun lt (x, y) = x < y
+    fun leq (x, y) = x <= y
+  end
+  structure LBH = LazyBinomialHeap (Elem)
+  structure SH = SizedHeap (LBH)
+  open SH
+  val e1 = insert (0, empty)
+  (* 2^29サイズのヒープをつくる *)
+  val en = foldl
+             (fn (_, merged) => merge (merged, merged))
+             e1
+             (List.tabulate (29, fn _ => ()))
+in
+val enBefore = en
+val t = isEmpty en
+val enAfter1 = en
+val enAfter2 = deleteMin en
+end
