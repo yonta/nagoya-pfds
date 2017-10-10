@@ -193,6 +193,7 @@ struct
         if Elem.leq (x, y) then link (a, b) else link (b, a)
   and link (T (x, E, m), a) = T (x, a, m)
     | link (T (x, b, m), a) = T (x, E, $(merge (merge (a, b), force m)))
+    | link (E, _) = raise Empty
 
   fun insert (x, a) = merge (T (x, E, $E), a)
 
