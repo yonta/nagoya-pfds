@@ -28,6 +28,6 @@ mergeへ入力するヒープをh1とh2をそれぞれ以下のようなツリ�
 
 よって、償却コストはO(log(n))である
 
-# mergeの償却コストがO(log(n))の証明
+# deleteMinの償却コストがO(log(n))の証明
 
 TODO
