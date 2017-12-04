@@ -59,7 +59,9 @@ sig
   val sort  : Sortable -> Elem.T list
 end
 
-open Stream
+local
+  open Stream
+in
 
 structure RealTimeQueue : QUEUE =
 struct
@@ -177,3 +179,5 @@ struct
               | mrgAll (xs, (xs', _) :: segs) = mrgAll (mrg (xs, xs'), segs)
         in streamToList (mrgAll ($Nil, segs)) end
 end
+
+end (* local open Stream in *)
