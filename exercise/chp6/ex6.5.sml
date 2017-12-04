@@ -60,7 +60,7 @@ local
   val e1 = insert (0, empty)
   (* 2^29サイズのヒープをつくる *)
   val en = foldl
-             (fn (_, merged) => merge (merged, merged))
+             (fn (_, merged) => merge (merged, merged)) (* 2倍にする *)
              e1
              (List.tabulate (29, fn _ => ()))
 in
