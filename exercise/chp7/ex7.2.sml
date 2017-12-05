@@ -1,4 +1,4 @@
-(* OS.FileSys.chDir "../exercise/chp6" *)
+(* OS.FileSys.chDir "../exercise/chp7" *)
 
 (* SML/NJのlazy機能の準備 *)
 (*
