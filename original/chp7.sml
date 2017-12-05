@@ -71,9 +71,10 @@ struct
   fun isEmpty ($Nil, _, _) = true
     | isEmpty _ = false
 
-  fun rotate ($Nil, y :: _, a) = $(Cons (y, a))
+  fun rotate ($Nil, [y], a) = $(Cons (y, a))
     | rotate ($(Cons (x, xs)), y :: ys, a) =
         $(Cons (x, rotate (xs, ys, $(Cons (y, a)))))
+    | rotate _ = raise Fail "RealTimeQueue.rotate: not supported pattern"
 
   fun exec (f, r, $(Cons (x, s))) = (f, r, s)
     | exec (f, r, $Nil) = let val f' = rotate (f, r, $Nil) in (f', [], f') end
