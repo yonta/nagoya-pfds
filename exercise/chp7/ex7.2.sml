@@ -52,7 +52,6 @@ struct
 end
 end
 
-(* 'a RealTimeQueue.Queue -> int *)
 local
   open Stream
 in
@@ -60,14 +59,15 @@ fun sizeOfStream ($Nil) = 0
   | sizeOfStream ($(Cons (_, s))) = 1 + sizeOfStream s
 end
 
+(* 'a RealTimeQueue.Queue -> int *)
 fun sizeQueue1 (f, r, _) = sizeOfStream f + length r
 (*
- * |s| = |f| - |r| + 1、より
- * |f| = |s| + |r| - 1、なので、
+ * |s| = |f| - |r|、より
+ * |f| = |s| + |r|、なので、
  * (キューのサイズ) = |f| + |r|
- *                  = |s| + 2|r| - 1
+ *                  = |s| + 2|r|
  *)
-fun sizeQueue2 (_, r, s) = sizeOfStream s + 2 * length r - 1
+fun sizeQueue2 (_, r, s) = sizeOfStream s + 2 * length r
 
 (*
  * それぞれの実行時間の差を考える。
@@ -78,6 +78,6 @@ fun sizeQueue2 (_, r, s) = sizeOfStream s + 2 * length r - 1
  * ここで、sはfの接尾辞であるため、|s|<=|f|が保証される。
  * つまり、sizeOfStreamを呼び出したときの時間は、fよりもsのほうが同等か短い。
  *
- * よって、f=sのときはsizeQueue1のほうが乗算1回加算1回分早いが、
+ * よって、f=sのときはsizeQueue1のほうが乗算1回分早いが、
  * それ以外の場合はsizeQueue2のほうが早くなる。
  *)
