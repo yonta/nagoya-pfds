@@ -84,15 +84,14 @@ end  (* local open Lazy *)
 
 signature QUEUE =
 sig
-  type elem
-  type queue
+  type 'a queue
 
-  val empty   : queue
-  val isEmpty : queue -> bool
+  val empty   : 'a queue
+  val isEmpty : 'a queue -> bool
 
-  val snoc    : queue * elem -> queue
-  val head    : queue -> elem
-  val tail    : queue -> queue
+  val snoc    : 'a queue * 'a -> 'a queue
+  val head    : 'a queue -> 'a
+  val tail    : 'a queue -> 'a queue
 end
 
 (*
@@ -100,25 +99,23 @@ end
  * structureではなくfunctorとしてtypeを受け取る。
  * これにより、Queueの実体の生成時にQueueは一意の型を要素として持つ。
  *)
-functor RealTimeQueue (type t) : QUEUE =
+structure RealTimeQueue : QUEUE =
 struct
-  type elem = t
-
-  type queue =
+  type 'a queue =
        {
-         front : elem Stream.stream,
-         rear : elem list,
-         accum : elem Stream.stream
+         front : 'a Stream.stream,
+         rear : 'a list,
+         accum : 'a Stream.stream
        }
 
-  val empty : queue =
+  val empty : 'a queue =
       {
         front = Lazy.$ (fn () => Stream.Nil),
         rear = nil,
         accum = Lazy.$ (fn () => Stream.Nil)
       }
 
-  fun isEmpty ({front, ...} : queue) = Stream.null front
+  fun isEmpty ({front, ...} : 'a queue) = Stream.null front
 
   (* fun makeQueue f r a = {front = f, rear = r, accum = a} *)
 
@@ -142,7 +139,7 @@ struct
   fun snoc ({front, rear, accum}, x) =
     exec {front = front, rear = x :: rear, accum = accum}
 
-  fun head ({front, ...} : queue) =
+  fun head ({front, ...} : 'a queue) =
     case Lazy.force front of
         Stream.Cons (x, _) => x
       | Stream.Nil => raise Empty
