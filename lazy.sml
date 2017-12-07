@@ -111,14 +111,14 @@ struct
          accum : elem Stream.stream
        }
 
-  val empty =
+  val empty : queue =
       {
         front = Lazy.$ (fn () => Stream.Nil),
         rear = nil,
         accum = Lazy.$ (fn () => Stream.Nil)
       }
 
-  fun isEmpty {front, ...} = Stream.null front
+  fun isEmpty ({front, ...} : queue) = Stream.null front
 
   (* fun makeQueue f r a = {front = f, rear = r, accum = a} *)
 
@@ -135,19 +135,20 @@ struct
 
   fun exec (q as {front, rear, accum}) =
     case Lazy.force accum of
-        Stream.Cons (_, s) => q # {accum = s}
+        Stream.Cons (_, s) => {front = front, rear = rear, accum = s}
       | Stream.Nil => let val front' = rotate q
                       in {front = front', rear = nil, accum = front'} end
 
-  fun snoc (q as {rear, ...}, x) = exec (q # {rear = x :: rear})
+  fun snoc ({front, rear, accum}, x) =
+    exec {front = front, rear = x :: rear, accum = accum}
 
-  fun head {front, ...} =
+  fun head ({front, ...} : queue) =
     case Lazy.force front of
         Stream.Cons (x, _) => x
       | Stream.Nil => raise Empty
 
-  fun tail (q as {front, ...}) =
+  fun tail {front, rear, accum} =
     case Lazy.force front of
-        Stream.Cons (x, s) => exec (q # {front = s})
+        Stream.Cons (x, s) => exec {front = s, rear = rear, accum = accum}
       | Stream.Nil => raise Empty
 end
