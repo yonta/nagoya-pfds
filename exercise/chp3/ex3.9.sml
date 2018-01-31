@@ -1,10 +1,18 @@
-use "../../original/chp3.sml";
+(* use "../../original/chp3.sml"; *)
 
 (* OS.FileSys.chDir "../exercise/chp3" *)
 
 (* SML/NJのプリンタ設定を変える *)
 val () = Control.Print.printDepth := 10  (* 再帰データの深さ、default : 5 *)
 val () = Control.Print.printLength := 20 (* リスト長さ、default : 12 *)
+
+signature ORDERED =
+sig
+  type T
+  val eq  : T * T -> bool
+  val lt  : T * T -> bool
+  val leq : T * T -> bool
+end
 
 signature SET =
 sig
@@ -56,10 +64,11 @@ struct
   (*
    * 考え方：
    * 基本的なアルゴリズムは、トーナメント状に畳み込みを行うことである。
-   * すでにソートされているリストが与えられているので、サブリストで作ったツリーと、
-   * サブリストで作ったツリーとを、マージするのが効率がよい。
+   * 与えられたリストはすでにソートされているため、
+   * リストを中心で半分に分割し、それぞれのリストからツリーを作り、
+   * その2つのツリーをマージすると効率がよい。
    *
-   * 例えば極端な例を出すと、[1,2,3,4,5]というリストは、
+   * 例えば、[1,2,3,4,5]というリストは、
    * 再帰呼び出しによって[1,2]から作ったツリーT1と、
    * 要素3と、再帰呼び出しによって[4,5]から作ったツリーT2とを使って、
    * T(R,T1,3,T2)とマージできる。
@@ -78,14 +87,16 @@ struct
     open Vector
   in
   fun fromOrdListImpl v i j =
+      if i > j then raise Fail ("Bug:fromOrdListImpl: panic with i=" ^
+                                Int.toString i ^ "j=" ^ Int.toString j ^ ".\n")
     (* vector length is 1 *)
-    if i = j then T (R, E, sub (v, i), E)
+    else if i = j then T (R, E, sub (v, i), E)
     (* vector length is 2 *)
     else if i = j - 1 then T (B, T (R, E, sub (v, i), E), sub (v, j), E)
     (* vector length is more than 2 *)
     else
       let
-        val centor = j - i - 1
+        val centor = i + (j - i) div 2
         val top = sub (v, centor)
         val left = fromOrdListImpl v i (centor - 1)
         val right = fromOrdListImpl v (centor + 1) j
