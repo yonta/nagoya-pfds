@@ -96,10 +96,10 @@ struct
     (* vector length is more than 2 *)
     else
       let
-        val centor = i + (j - i) div 2
-        val top = sub (v, centor)
-        val left = fromOrdListImpl v i (centor - 1)
-        val right = fromOrdListImpl v (centor + 1) j
+        val center = i + (j - i) div 2
+        val top = sub (v, center)
+        val left = fromOrdListImpl v i (center - 1)
+        val right = fromOrdListImpl v (center + 1) j
       in
         balance (R , left, top, right)
       end
