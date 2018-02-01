@@ -167,5 +167,5 @@ struct
       else raise Fail "Already deleted" (* 削除済みなら新たなツリーを作らない *)
   fun delete (x, {size, dead, tree}) =
       let val tree = deleteTree (x, tree) handle Fail mess => tree
-      in check {size = size, dead = dead - 1, tree = tree} end
+      in check {size = size, dead = dead + 1, tree = tree} end
 end
