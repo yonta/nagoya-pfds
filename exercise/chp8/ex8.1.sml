@@ -8,7 +8,6 @@ sig
   val leq : T * T -> bool
 end
 
-(* ex8.1 *)
 signature SET =
 sig
   type Elem
@@ -17,9 +16,10 @@ sig
   val empty  : Set
   val insert : Elem * Set -> Set
   val member : Elem * Set -> bool
-  val delete : Elem * Set -> Set
+  val delete : Elem * Set -> Set (* ex8.1 *)
 end
 
+(* ex8.1 *)
 functor RedBlackSet (Element : ORDERED) :> SET where type Elem = Element.T =
 struct
   type Elem = Element.T
