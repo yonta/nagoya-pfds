@@ -93,7 +93,12 @@ struct
       else drop (i - size t, ts)
 
   (* ex9.2 *)
-  fun create (n, x) = raise Fail "unimplemented"
+  fun createImpl (0, accum) = nil
+    | createImpl (n, accum) =
+      let val l = createImpl (n div 2, Node (size accum * 2, accum, accum))
+      in if n mod 2 = 1 then One accum :: l else Zero :: l end
+  fun create (n, x) = createImpl (n, Leaf x)
+
 end
 
 local
@@ -103,8 +108,6 @@ local
 in
 val l1 = consN 10 empty
 val l2 = drop (5, l1)
-(*
 val l3 = create (10, 0)
 val l4 = drop (5, l3)
-*)
 end
