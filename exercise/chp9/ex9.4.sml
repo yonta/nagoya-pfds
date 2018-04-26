@@ -1,17 +1,17 @@
-datatype Digit = One | Two
+datatype Digit = ONE | TWO
 type Nat = Digit list
 
-fun inc nil = [One]
-  | inc (One :: ds) = Two :: ds
-  | inc (Two :: ds) = One :: inc ds
+fun inc nil = [ONE]
+  | inc (ONE :: ds) = TWO :: ds
+  | inc (TWO :: ds) = ONE :: inc ds
 
 fun dec nil = raise Fail "dec: dec by ZERO"
-  | dec (One :: ds) = Two :: dec ds
-  | dec (Two :: ds) = One :: ds
+  | dec (ONE :: ds) = TWO :: dec ds
+  | dec (TWO :: ds) = ONE :: ds
 
 fun add nil n2 = n2
   | add n1 nil = n1
-  | add (One :: n1) (One :: n2) = Two :: add n1 n2
-  | add (One :: n1) (Two :: n2) = One :: inc (add n1 n2)
-  | add (Two :: n1) (One :: n2) = One :: inc (add n1 n2)
-  | add (Two :: n1) (Two :: n2) = Two :: inc (add n1 n2)
+  | add (ONE :: n1) (ONE :: n2) = TWO :: add n1 n2
+  | add (ONE :: n1) (TWO :: n2) = ONE :: inc (add n1 n2)
+  | add (TWO :: n1) (ONE :: n2) = ONE :: inc (add n1 n2)
+  | add (TWO :: n1) (TWO :: n2) = TWO :: inc (add n1 n2)
