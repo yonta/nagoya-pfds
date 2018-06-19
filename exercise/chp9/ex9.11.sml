@@ -133,8 +133,10 @@ struct
 
   fun findMin ts = let val (t, _) = removeMinTree ts in root t end
   fun deleteMin ts =
-      let val (NODE (x, ts1), ts2) = removeMinTree ts
-      in merge ([ONE (rev ts1)], ts2) end
+      let
+        val (NODE (x, ts1), ts2) = removeMinTree ts
+        val ts1' = case ts1 of nil => nil | _::_ => [ONE (rev ts1)]
+      in merge (ts1', ts2) end
 
   fun existsZero ds =
       List.exists (fn d => case d of ZERO => true | _ => false) ds
