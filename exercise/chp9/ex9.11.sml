@@ -45,6 +45,12 @@ struct
   fun insert (x, h) = insTree (NODE (x, []), h)
 
   (* Heap * Heap -> Heap *)
+  (*
+   * simpleMergeは普遍条件を気にせずにマージを行う。
+   * simpleMergeの結果は普遍条件を満たさないため、fixup2をするまでは
+   * insert/insTree/fixup/simpleInsTreeを呼び出すことができない。
+   * もしも呼び出すと、simpleInsTreeで"start with TWO"などの例外が起こる。
+   *)
   fun simpleMerge (h1, []) = h1 (* end pattern *)
     | simpleMerge ([], h2) = h2
     | simpleMerge (ONE nil :: _, _) = (* 1-0, 1-1 or 1-2 pattern *)
@@ -61,16 +67,27 @@ struct
         TWO (t1, t2) :: simpleMerge (ds1, ds2)
       end
     | simpleMerge (ONE (t1 :: ts1) :: ds1, TWO tp2 :: ds2) =
-      (* both pattarn of ONE arg with [t1] and [t1 :: ts1(not nil)] *)
-      let val ds1 = case ts1 of nil => ds1 | _ :: _ => ONE ts1 :: ds1
-      in  ones ([t1], insTree (link tp2 ,simpleMerge (ds1, ds2))) end
+      let
+        (* both pattarn of ONE arg with [t1] and [t1 :: ts1(not nil)]
+         * If it is [t1] pattern, ONE constructor will be removed. *)
+        val ds1 = case ts1 of nil => ds1 | _ :: _ => ONE ts1 :: ds1
+        val ds = simpleMerge (ds1, ds2)
+        val ds = simpleMerge ([ONE [link tp2]], ds)
+      in
+        ones ([t1], ds)
+      end
     | simpleMerge (ds1, ds2 as ONE _ :: _) = simpleMerge (ds2, ds1)
     (* HACK: decreese number of patarn match by swaping ds1 and ds2 *)
     (* 0-0 or 0-2 pattern *)
     | simpleMerge (ZERO :: ds1, d2 :: ds2) = d2 :: simpleMerge (ds1, ds2)
     (* 2-2 pattern *)
     | simpleMerge ((d1 as TWO tp1) :: ds1, TWO tp2 :: ds2) =
-      d1 :: insTree (link tp2, simpleMerge (ds1, ds2))
+      let
+        val ds = simpleMerge (ds1, ds2)
+        val ds = simpleMerge ([ONE [link tp2]], ds)
+      in
+        d1 :: ds
+      end
     | simpleMerge (ds1, ds2) = simpleMerge (ds2, ds1)
     (* HACK: decreese number of patarn match by swaping ds1 and ds2 *)
 
