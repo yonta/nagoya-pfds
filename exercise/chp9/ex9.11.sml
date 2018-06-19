@@ -76,8 +76,8 @@ struct
 
   (* Heap -> Heap *)
   fun fixup2 nil = nil
-    | fixup2 (TWO tp :: ds) = ZERO :: fixup2 (insTree (link tp, ds))
-    | fixup2 (d :: ds) = d :: fixup ds
+    | fixup2 (TWO tp :: ds) = ZERO :: insTree (link tp, fixup2 ds)
+    | fixup2 (d :: ds) = d :: fixup2 ds
 
   fun merge h2 = fixup2 (simpleMerge h2)
 
