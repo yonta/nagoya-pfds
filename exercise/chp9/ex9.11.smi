@@ -1,0 +1,29 @@
+_require "basis.smi"
+_require "heap.sig"
+
+functor BinomialHeap (Element :
+                      sig
+                        type T
+                        val eq  : T * T -> bool
+                        val lt  : T * T -> bool
+                        val leq : T * T -> bool
+                      end
+                     ) =
+struct
+  structure Elem =
+  struct
+    type T = Element.T
+    val eq  : T * T -> bool
+    val lt  : T * T -> bool
+    val leq : T * T -> bool
+  end
+  type Heap (= boxed)
+  val empty     : Heap
+  val isEmpty   : Heap -> bool
+  val insert    : Elem.T * Heap -> Heap
+  val merge     : Heap * Heap -> Heap
+  val findMin   : Heap -> Elem.T
+  val deleteMin : Heap -> Heap
+
+  val valid : Heap -> bool      (* for test *)
+end
