@@ -53,10 +53,8 @@ local
   val tests =
       Test.TestList
         [
-          Test.TestLabel ("BinomialHeap", tests)
+          Test.TestLabel ("ex9.11: BinomialHeap", tests)
         ]
 in
-fun main () = TextUITestRunner.runTest {output = TextIO.stdOut} tests
+structure Ex9_11 = struct val tests = tests end
 end
-
-val () = main ()
