@@ -33,6 +33,11 @@ local
           assertEqualInt
             25
             (findMin (repeat 50 deleteMin (merge (heap 50, heap 100)))))
+  val testValid1 =
+      ("valid empty", fn () => assertTrue (valid empty))
+  val testValid2 =
+      ("valid true", fn () => assertTrue (valid (validHeap 0)))
+  val testValid3 = ("valid false", fn () => assertFalse (valid (invalidHeap 0)))
   val tests =
       Test.TestList
         [
@@ -42,6 +47,7 @@ local
           Test.Test test4,
           Test.Test test5,
           Test.Test test6,
+          Test.TestList (map Test.Test [testValid1, testValid2, testValid3]),
           Test.TestList nil
         ]
   val tests =

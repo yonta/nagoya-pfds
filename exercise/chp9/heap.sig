@@ -17,5 +17,8 @@ sig
   val findMin   : Heap -> Elem.T
   val deleteMin : Heap -> Heap
 
-  val valid : Heap -> bool      (* for unit test *)
+  (* for unit test *)
+  val valid : Heap -> bool
+  val validHeap : Elem.T -> Heap
+  val invalidHeap : Elem.T -> Heap
 end

@@ -25,5 +25,8 @@ struct
   val findMin   : Heap -> Elem.T
   val deleteMin : Heap -> Heap
 
-  val valid : Heap -> bool      (* for test *)
+  (* for test *)
+  val valid : Heap -> bool
+  val validHeap : Elem.T -> Heap
+  val invalidHeap : Elem.T -> Heap
 end

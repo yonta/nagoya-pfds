@@ -167,4 +167,13 @@ struct
         case toTwo of NONE => true
                     | SOME (ds', rest) => existsZero ds' andalso valid rest
       end
+
+  fun tree4 x = NODE (x, [NODE (x, [NODE (x, [])]), NODE (x, [])])
+  fun tree8 x = NODE (x,
+                      [NODE (x, [NODE (x, [NODE (x, [])]),
+                               NODE (x, [])]),
+                     NODE (x, [NODE (x, [])]),
+                     NODE (x, [])])
+  fun validHeap x = [ZERO, ONE [NODE (x, [NODE (x, [])])], ZERO, ONE [tree8 x]]
+  fun invalidHeap x = [ZERO, ZERO, TWO (tree4 x, tree4 x), TWO (tree8 x, tree8 x)]
 end
