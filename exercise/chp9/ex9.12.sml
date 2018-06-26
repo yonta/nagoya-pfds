@@ -30,6 +30,7 @@ struct
 
   fun simpleDec nil = raise Fail "Error: dec with ZERO"
     | simpleDec (ZERO :: ds) = raise Fail "Bug: simpleDec: called with ZERO"
+    | simpleDec [ONES 1] = zero
     | simpleDec (ONES i :: ds) = ZERO :: ones (i - 1, ds)
     | simpleDec (TWO :: ds) = ones (1, ds)
     | simpleDec (THREES i :: ds) = TWO :: threes (i - 1, ds)
@@ -48,6 +49,7 @@ struct
    * 対策で2種類の実装を用意する。
    *)
   fun fixup nil = nil
+    | fixup [ZERO] = zero
     | fixup (ZERO :: ds) = TWO :: simpleDec ds
     | fixup (ONES i :: ZERO :: ds) = ONES i :: TWO :: simpleDec ds
     | fixup (THREES i :: FOUR :: ds) = THREES i :: TWO :: simpleInc ds
