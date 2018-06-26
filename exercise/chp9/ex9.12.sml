@@ -1,4 +1,12 @@
-structure SegmentedRedundantBinaryNumber =
+structure SegmentedRedundantBinaryNumber
+          : sig
+            datatype Digit = ZERO | ONES of int | TWO | THREES of int | FOUR
+            type Nat = Digit list
+            val zero : Nat
+            val inc : Nat -> Nat
+            val dec : Nat -> Nat
+          end
+ =
 struct
   datatype Digit = ZERO | ONES of int | TWO | THREES of int | FOUR
   type Nat = Digit list
