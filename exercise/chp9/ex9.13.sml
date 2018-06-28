@@ -83,7 +83,7 @@ struct
   fun tail nil = raise Empty
     | tail ds =
       let val (_, ds') = unconsTree ds
-      in  ds' end
+      in fixup ds' end
 
   fun lookupTreeN (0, LEAF x, _) = x
     | lookupTreeN (_, LEAF _, _) = raise Subscript
@@ -116,7 +116,7 @@ struct
       else if i < 2 * n then lookupTreeN (i - n, t2, n)
       else if i < 3 * n then lookupTreeN (i - 2 * n, t3, n)
       else if i < 4 * n then lookupTreeN (i - 3 * n, t4, n)
-      else lookupn (i - 4 * n, ds, n)
+      else lookupn (i - 4 * n, ds, n * 2)
 
   fun lookup (i, ds) = lookupn (i, ds, 1)
 
