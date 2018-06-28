@@ -20,9 +20,9 @@ local
   val test4 =
       ("lookup1", fn () => assertEqualInt 1 (lookup (0, consn 100 empty)))
   val test5 =
-      ("lookup1", fn () => assertEqualInt 50 (lookup (49, consn 100 empty)))
+      ("lookup2", fn () => assertEqualInt 50 (lookup (49, consn 100 empty)))
   val test6 =
-      ("lookup1", fn () => assertEqualInt 100 (lookup (99, consn 100 empty)))
+      ("lookup3", fn () => assertEqualInt 100 (lookup (99, consn 100 empty)))
 
   val tests =
       Test.TestList
