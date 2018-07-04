@@ -1,0 +1,12 @@
+_require "basis.smi"
+_require "queue.sig"
+
+structure HoodMelvilleQueue =
+struct
+  type 'a Queue (= boxed)
+  val empty   : 'a Queue
+  val isEmpty : 'a Queue -> bool
+  val snoc    : 'a Queue * 'a -> 'a Queue
+  val head    : 'a Queue -> 'a
+  val tail    : 'a Queue -> 'a Queue
+end
