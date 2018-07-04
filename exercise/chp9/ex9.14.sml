@@ -1,4 +1,4 @@
-structure HoodMelvilleQueue : QUEUE =
+structure HoodMelvilleQueue : UPDATABLE_QUEUE =
 struct
   datatype 'a RotationState =
       Idle
@@ -41,4 +41,7 @@ struct
   fun tail (lenf, [], state, lenr, r) = raise Empty
     | tail (lenf, x :: f, state, lenr, r) =
         check (lenf-1, f, invalidate state, lenr, r)
+
+  fun lookup _ = raise Fail "Unimpled"
+  fun update _ = raise Fail "Unimpled"
 end

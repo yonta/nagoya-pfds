@@ -1,5 +1,5 @@
 _require "basis.smi"
-_require "queue.sig"
+_require "updatable_queue.sig"
 
 structure HoodMelvilleQueue =
 struct
@@ -9,4 +9,6 @@ struct
   val snoc    : 'a Queue * 'a -> 'a Queue
   val head    : 'a Queue -> 'a
   val tail    : 'a Queue -> 'a Queue
+  val lookup  : int * 'a Queue -> 'a
+  val update  : int * 'a * 'a Queue -> 'a Queue
 end

@@ -24,17 +24,45 @@ local
   val test7 =
       ("snoc, tail and head",
        fn () => assertEqualInt 1 (head (tailn 99 (snocn 100 empty))))
-
+  val test8 =
+      ("lookup1", fn () => assertEqualInt 100 (lookup (0, snocn 100 empty)))
+  val test9 =
+      ("lookup2", fn () => assertEqualInt 50 (lookup (51, snocn 100 empty)))
+  val test10 =
+      ("lookup3", fn () => assertEqualInt 1 (lookup (99, snocn 100 empty)))
+  val test11 =
+      ("update1",
+       fn () => assertEqualInt
+                  ~1
+                  (lookup (50 ,update (50, ~1, snocn 100 empty))))
+  val test12 =
+      ("update2",
+       fn () => assertEqualInt
+                  100
+                  (lookup (1 ,update (50, ~1, snocn 100 empty))))
+  val test13 =
+      ("update3",
+       fn () => assertEqualInt
+                  1
+                  (lookup (99 ,update (50, ~1, snocn 100 empty))))
+  val test14 =
+      ("update4",
+       fn () => assertEqualInt
+                  ~1
+                  (lookup (1 ,update (1, ~1, snocn 100 empty))))
+  val test15 =
+      ("update5",
+       fn () => assertEqualInt
+                  ~1
+                  (lookup (99 ,update (99, ~1, snocn 100 empty))))
   val tests =
       Test.TestList
         [
-          Test.Test test1,
-          Test.Test test2,
-          Test.Test test3,
-          Test.Test test4,
-          Test.Test test5,
-          Test.Test test6,
-          Test.Test test7,
+          Test.Test test1, Test.Test test2, Test.Test test3,
+          Test.Test test4, Test.Test test5, Test.Test test6,
+          Test.Test test7, Test.Test test8, Test.Test test9,
+          Test.Test test10, Test.Test test11, Test.Test test12,
+          Test.Test test13, Test.Test test14, Test.Test test15,
           Test.TestList nil
         ]
   val tests =
