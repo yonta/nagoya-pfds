@@ -13,5 +13,4 @@ sig
   (* lookup and update raise Subscript if index is out of bounds *)
   val lookup  : int * 'a RList -> 'a
   val update  : int * 'a * 'a RList -> 'a RList
-
 end
