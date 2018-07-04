@@ -7,6 +7,7 @@ local
           Ex9_11.tests,
           Ex9_12.tests,
           Ex9_13.tests,
+          Ex9_14.tests,
           Test.TestList nil
         ]
   fun main () = TextUITestRunner.runTest {output = TextIO.stdOut} tests

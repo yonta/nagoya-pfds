@@ -1,0 +1,5 @@
+_require "basis.smi"
+_require "smlunit-lib.smi"
+_require "../../chp9/ex9.14.smi"
+
+structure Ex9_14 = struct val tests : SMLUnit.Test.test end

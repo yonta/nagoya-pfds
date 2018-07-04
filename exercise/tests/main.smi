@@ -1,0 +1,6 @@
+_require "basis.smi"
+_require "smlunit-lib.smi"
+_require "chp9/test-ex9.11.smi"
+_require "chp9/test-ex9.12.smi"
+_require "chp9/test-ex9.13.smi"
+_require "chp9/test-ex9.14.smi"
